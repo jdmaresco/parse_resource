@@ -49,7 +49,11 @@ class ParseUser < ParseResource::Base
     base_uri   = "https://api.parse.com/users/me"
     app_id     = settings['app_id']
     master_key = settings['master_key']
-    resource = RestClient::Resource.new(base_uri, app_id, master_key, session_token)
+    resource = RestClient::Resource.new(base_uri, headers: {
+      application_id: app_id, 
+      master_key: master_key,
+      session_token: session_token
+    })
     
     begin
       resp = resource.get({})
